@@ -17,7 +17,7 @@ spec:
     spec:
       serviceAccountName: nginx-ingress
       containers:
-      - image: nginx-plus-ingress:1.10.0
+      - image: gcr.io/solutions-engineering-248511/ward-nginx-plus-ingress:1.10.0
         imagePullPolicy: IfNotPresent
         name: nginx-plus-ingress
         ports:
@@ -55,11 +55,11 @@ spec:
               fieldPath: metadata.name
         args:
           - -nginx-plus
-          - -nginx-configmaps=$(POD_NAMESPACE)/nginx-config
-          - -default-server-tls-secret=$(POD_NAMESPACE)/default-server-secret
-         #- -enable-app-protect        
+          - -nginx-configmaps=nginx-ingress/nginx-config
+          - -default-server-tls-secret=nginx-ingress/default-server-secret
+         # - -enable-app-protect        
          #- -v=3 # Enables extensive logging. Useful for troubleshooting.
-         #- -report-ingress-status
-         #- -external-service=nginx-ingress
-         #- -enable-prometheus-metrics
+          - -report-ingress-status
+          - -external-service=nginx-ingress
+          - -enable-prometheus-metrics
          #- -global-configuration=$(POD_NAMESPACE)/nginx-configuration
